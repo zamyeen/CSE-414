@@ -1,0 +1,32 @@
+a) R(A,B,C,D,E) has functional dependencies D->B, CE->A
+1. The relation R is not in BCNF because the first FD's closure is:
+D+ = {D,B}
+which is a dependency violation.
+2. Thus we decompose R with R1(D,B) and R2(A,C,E,D)
+The FD D->B is satisfied and so R1 is in BCNF form.
+3. The closure of CE is:
+CE+ = {C,E,A} which means this dependency is violated
+4. Thus we decompose R2 into R3(C,E,A) and R4(D,C,E)
+The FD is satisfied and all relationships are in BCNF form
+5. Thus the relations are R1(D,B), R3(C,E,A), and R4(D,C,E)
+
+b) S(A,B,C,D,E) has functional dependencies A->E, BC->A, DE->B
+1. The relation S is not in BCNF because the first FD's closure is:
+A+ = {A,E}
+which is a dependency violation.
+2. To resolve it we decompose S into S1(A,E) and S2(B,C,D,A)
+The functional dependency BC->A is still violated because
+the closure of BC is:
+BC+ = {B,C,A}
+3. To resolve this we decompose S2 into S3(B,C,A) and S4(D,B,C)
+4. The FD BC->A is satisfied and S3 is in BCNF form.
+We also notice that DE->B is lost but BCNF still holds 
+because for S4 D+ = {D}, B+ = {B}, C+ = {C}
+Thus BCNF form of S is S1(A,E), S3(B,C,A), S4(D,B,C)
+
+c) A->A, B->B, C->C, D->D will give all subsets of {A,B,C,D} to be closed.
+For this question no FD's will also give this subset.
+
+d) A->BCD, B->ACD, C->ABD, D-> ABC will yield close subsets of {} and {A,B,C,D}
+
+e) A->BCD, B->C, C->B, D->ABC will yield close subsets of {}, {A,B,C,D} and {B,C}
