@@ -1,0 +1,30 @@
+SELECT DISTINCT 
+y1.name AS first_country,
+y2.name AS second_country,
+m AS mountains,
+s AS seas
+--Countries
+FROM geoindex.country AS y1,  geoindex.country AS y2
+-- Mountains
+LET m = 
+(SELECT DISTINCT m.name AS mountain
+FROM geoindex.mountain AS m,
+split(m.`-country`,' ') AS mcode1,
+split(m.`-country`,' ') AS mcode2 
+WHERE  y1.`-car_code` = mcode1
+AND y2.`-car_code` = mcode2), 
+-- Seas
+s = 
+(SELECT DISTINCT s.name AS sea
+FROM geoindex.sea AS s,
+split(s.`-country`,' ') AS scode1,
+split(s.`-country`,' ') AS scode2 
+WHERE  y1.`-car_code` = scode1 AND
+ y2.`-car_code` = scode2)
+-- Check conditions
+WHERE y1.`-car_code` != y2.`-car_code` AND -- Not the same
+y1.`-car_code` > y2.`-car_code` AND -- Only one order
+ARRAY_COUNT(m) > 0 AND -- More than one
+ARRAY_COUNT(s) > 0; -- More than one
+
+-- 3.421 seconds

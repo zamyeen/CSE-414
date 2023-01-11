@@ -1,0 +1,10 @@
+SELECT COUNT(r) AS num_religions,
+y.name AS country,
+y.population AS population
+FROM geo.world AS x, x.mondial.country AS y,
+    CASE WHEN is_array(y.religions) THEN y.religions
+    ELSE [y.religions] END r
+GROUP BY y.name, y.population
+ORDER BY y.name;
+
+-- 0.118 seconds

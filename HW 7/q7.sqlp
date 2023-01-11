@@ -1,0 +1,11 @@
+SELECT y.name AS country_name,
+y.`-car_code` AS country_code, 
+s AS seas 
+FROM geo.world AS x, x.mondial.country AS y 
+LET s = ( SELECT z.name AS sea
+FROM geo.world AS x2, x2.mondial.sea AS z, split(z.`-country`, ' ') r 
+WHERE y.`-car_code` = r)
+WHERE ARRAY_COUNT(s) >= 2
+ORDER BY ARRAY_COUNT(s) DESC;
+
+-- 0.211 seconds
